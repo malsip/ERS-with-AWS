@@ -1,0 +1,25 @@
+<div *ngIf="sessionService.getUserSession() && sessionService.getUserSession().role == 'Admin'" class="container">
+    <div>
+        <button (click)="getAllUsers()">Get All Users</button>
+    </div>
+    <div *ngIf="users.length > 0" class="container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Username</th>
+                    <th scope="col">First Name</th>
+                    <th scope="col">Last Name</th>
+                    <th scope="col">Email</th>
+                </tr>
+            </thead>
+            <tbody *ngFor="let user of users">
+                <tr>
+                    <td scope="col">{{user.username}}</td>
+                    <td scope="col">{{user.firstName}}</td>
+                    <td scope="col">{{user.lastName}}</td>
+                    <td scope="col">{{user.email}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

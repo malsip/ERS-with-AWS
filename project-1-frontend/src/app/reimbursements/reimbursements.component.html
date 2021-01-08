@@ -1,0 +1,80 @@
+<div *ngIf="sessionService.getUserSession() && !createReimbursement " class="container">
+    <div *ngIf="recentlySubmitted" class="row">
+        {{recentlySubmitted}}
+    </div>
+    <div class="row">
+        <button (click)="showCreateReimbursement()">Create Reimbursement</button>
+    </div>
+    <div class="row">
+        <button (click)="getMyReimbursements()">Get My Reimbursements</button>
+    </div>
+    <div *ngIf="sessionService.getUserSession().role == 'Admin'">
+        <div class="row">
+            <button (click)="getAllReimbursements()">Get All Reimbursements</button>
+        </div>
+        <!-- <div *ngIf="sessionService.getUserSession().subscribed == 'false'" class="row">
+            <button (click)="subscribeToReimbursments()">Subscribe to new Reimbursements</button>
+        </div> -->
+    </div>
+    <div *ngIf="reimbursements.length > 0" class="container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Author</th>
+                    <th scope="col">Amount</th>
+                    <th scope="col">Date Submitted</th>
+                    <th scope="col">Date Resolved</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Resolver</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Receipt</th>
+                </tr>
+            </thead>
+            <tbody *ngFor="let reimbursement of reimbursements">
+                <tr>
+                    <td scope="col">{{reimbursement.author}}</td>
+                    <td scope="col">{{reimbursement.amount}}</td>
+                    <td scope="col">{{reimbursement.dateSubmitted}}</td>
+                    <td scope="col">{{reimbursement.dateResolved}}</td>
+                    <td scope="col">{{reimbursement.description}}</td>
+                    <td scope="col"><div *ngIf="reimbursement.resolver">{{reimbursement.resolver}}</div></td>
+                    <td scope="col">{{reimbursement.status}}
+                        <div *ngIf="reimbursement.status == 'Pending' && sessionService.getUserSession().role == 'Admin'" class="row">
+                            <button (click)="updateReimbursement(reimbursement, 'Approved')">Approve</button>
+                            <button (click)="updateReimbursement(reimbursement, 'Denied')">Deny</button>
+                        </div> 
+                    </td>
+                    <td scope="col">{{reimbursement.type}}</td>
+                    <td scope="col"><img src="{{reimbursement.receipt}}"/></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div *ngIf="createReimbursement" class="container">
+    <div class="row">
+        <h5>Create New Reimbursment</h5>
+    </div>
+    <div class="row">
+        <input [(ngModel)]="newReimbursement.amount" placeholder="amount"/>
+    </div>
+    <div class="row">
+        <input [(ngModel)]="newReimbursement.description" placeholder="description"/>
+    </div>
+    <div class="row">
+        <select [(ngModel)]="newReimbursement.type">
+            <option value="Lodging">Lodging</option>
+            <option value="Travel">Travel</option>
+            <option value="Food">Food</option>
+            <option value="Other">Other</option>
+        </select>
+    </div>
+    <div class="row">
+        <h6 class="container">Receipt:</h6>
+        <input type="file" (change)="fileChangeEvent($event)" />
+    </div>
+    <div class="row">
+        <button (click)="submitNewReimbursement()">Submit</button>
+    </div>
+</div>

@@ -1,0 +1,35 @@
+<div *ngIf="!sessionService.getUserSession()" class="container">
+    <div class="container">
+        <div class="row">
+            <h5 class="col-sm">Login:</h5>
+        </div>
+        <div class="row">
+            <input [(ngModel)]="credentials.username" placeholder="username" />
+        </div>
+        <div class="row">
+            <input [(ngModel)]="credentials.password" placeholder="password"/>
+        </div>
+        <div class="row">
+            <button (click)="onLogin()">Submit</button>
+        </div>
+    </div>
+</div>
+<div *ngIf="sessionService.getUserSession()" class="container">
+    
+    <div class="row">
+        <h5 class="col-sm">Welcome {{sessionService.getUserSession().username}}!</h5>
+    </div>
+    <div class="row">
+        <button (click)="onLogout()">Logout</button>
+    </div>
+</div>
+<!-- <div class="container">
+    <div *ngIf="sessionService.getUserSession() && sessionService.getUserSession().subscribed" class="row">
+        <input [(ngModel)]="emailCode" placeholder="Verification Code"/>
+        <button (click)="verifyEmail()" >Verify Email</button>
+    </div>
+    <div class="row">
+        <button (click)="logCredentials()" >Log Credentials</button>
+    </div>
+</div> -->
+

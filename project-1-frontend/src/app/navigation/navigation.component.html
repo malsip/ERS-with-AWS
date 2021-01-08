@@ -1,0 +1,7 @@
+<div class="container">
+    <button routerLink='/'>Home</button>
+    <button routerLink='/login'>Login</button>
+    <button *ngIf="!sessionService.getUserSession()" routerLink='/sign-up'>Sign Up</button>
+    <button *ngIf="sessionService.getUserSession()" routerLink='/reimbursements'>Reimbursements</button>
+    <button *ngIf="sessionService.getUserSession() && sessionService.getUserSession().role == 'Admin'" routerLink='/users'>Users</button>
+</div>

@@ -1,0 +1,23 @@
+<div class="container">
+    <div class="row">
+        <h5>Sign Up:</h5>
+    </div>
+    <div class="row">
+        <input [(ngModel)]="newUser.username" placeholder="Username"/>
+    </div>
+    <div class="row">
+        <input [(ngModel)]="newUser.password" placeholder="Password"/>
+    </div>
+    <div class="row">
+        <input [(ngModel)]="newUser.firstName" placeholder="First Name"/>
+    </div>
+    <div class="row">
+        <input [(ngModel)]="newUser.lastName" placeholder="Last Name"/>
+    </div>
+    <div class="row">
+        <input [(ngModel)]="newUser.email" placeholder="Email"/>
+    </div>  
+    <div class="row">
+        <button (click)="submitNewUser()" routerLink="/login">Submit</button>
+    </div>
+</div>

@@ -1,0 +1,63 @@
+version: 0.2
+
+env:
+  variables:
+    S3_BUCKET: "project1-frontend-malsip"
+    APP_NAME: "project-1"
+  #parameter-store:
+     # key: "value"
+     # key: "value"
+  #secrets-manager:
+     # key: secret-id:json-key:version-stage:version-id
+     # key: secret-id:json-key:version-stage:version-id
+  #exported-variables:
+     # - variable
+     # - variable
+  #git-credential-helper: yes
+#batch:
+  #fast-fail: true
+  #build-list:
+  #build-matrix:
+  #build-graph:
+phases:
+  install:
+    #If you use the Ubuntu standard image 2.0 or later, you must specify runtime-versions.
+    #If you specify runtime-versions and use an image other than Ubuntu standard image 2.0, the build fails.
+    runtime-versions:
+      nodejs: 12
+      # name: version
+    commands:
+      - npm install -g @angular/cli
+      - npm install
+  #pre_build:
+    #commands:
+      # - command
+      # - command
+  build:
+    commands:
+      - ng build --prod
+      # - command
+  post_build:
+        commands:
+        - aws s3 rm s3://${S3_BUCKET} --recursive
+        - echo S3 bucket is cleared.
+        - aws s3 cp dist/project-1-frontend s3://${S3_BUCKET}/ --recursive --acl public-read
+        - echo Build completed on `date`
+#reports:
+  #report-name-or-arn:
+    #files:
+      # - location
+      # - location
+    #base-directory: location
+    #discard-paths: yes
+    #file-format: JunitXml | CucumberJson
+#artifacts:
+  #files:
+    # - '/'
+    # - location
+  #name: $(date +%Y-%m-%d)
+  #discard-paths: yes
+  #base-directory: 'dist*'
+#cache:
+  #paths:
+    # - paths
